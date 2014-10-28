@@ -1,4 +1,0 @@
-Bobby Bopper
-Tracy Tanner
-POST ...1
-GET ...1
