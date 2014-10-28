@@ -25,7 +25,7 @@ beginning of the process_testnet.php page.
 Install the database and tables (if you haven't already).
 
 Install the index_os.php file (copy it from inside the REMOTE_SHARED_HOST_INDEX_FILE folder of the download) into your 
-remote shared server website files. In that file there is a configuration that will send curl requests to the VPS and 
+remote shared server website files. In that file there is one configuration that will send curl requests to the VPS and 
 you need to insert the address there.
 
 
