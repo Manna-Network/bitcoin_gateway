@@ -1,0 +1,4 @@
+1) Add a Chron To the VPS -The page displaying the deposit address on the shared server needs to be refreshed in order to 
+display the transaction progress (as it continues on the blockchain irregardless of what this script is doing)
+and for the transaction to be processed by the VPS and the results sent to the shared server. A cron on the VPS is needed 
+so that the account on the shared server is credited automatically even if the user doesn't refresh the page
