@@ -2,3 +2,9 @@
 display the transaction progress (as it continues on the blockchain irregardless of what this script is doing)
 and for the transaction to be processed by the VPS and the results sent to the shared server. A cron on the VPS is needed 
 so that the account on the shared server is credited automatically even if the user doesn't refresh the page
+
+2) The addresses created by the script are unique addresses according to the original Bitcoin design. But since the deposits 
+will always be moved immediately to cold storage after a prescribed number of confirmations the user could just as easily 
+be given an address derived from a public key of a deterministic seed. Such an arrangement would keep the private key off
+even the node server. Changing the address creation to a determinstic one might be better for this script.
+
