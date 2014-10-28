@@ -5,7 +5,7 @@ To switch from Testnet to real bitcoin change value of isTestCoin from 1 to 0 in
 */
 //$account = $user_id;
 $account = 1001;
-$file="http://192.64.115.222/process_testnet.php";
+$file="http://your_VPS_address_here/process_testnet.php";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $file);
 curl_setopt($ch, CURLOPT_POSTFIELDS, array('user_id' => $account, 'isTestCoin'=> 1  ));
