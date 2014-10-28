@@ -28,6 +28,12 @@ Install the index_os.php file (copy it from inside the REMOTE_SHARED_HOST_INDEX_
 remote shared server website files. In that file there is one configuration that will send curl requests to the VPS and 
 you need to insert the address there.
 
+You also will need to fool the script into believing you are a user of the shared server by HARDCODING a user id. The
+user id will be used to create a unique account for that user (and from that unique account the script will create
+unlimited new addresses for the user to submit Bitcoin payments to). 
+
+Visit that page on your shared server from a browser. If everything is configured correctly then the page should display
+
 
 
 
