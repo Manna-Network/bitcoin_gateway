@@ -24,6 +24,7 @@ SET time_zone = "+00:00";
 
 --
 -- Table structure for table `archived_deposits`
+-- Save a record of the transaction here on the VPS before the results are sent to the shared hosting server's data base
 --
 
 CREATE TABLE IF NOT EXISTS `archived_deposits` (
