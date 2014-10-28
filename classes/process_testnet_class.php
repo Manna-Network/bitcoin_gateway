@@ -4,6 +4,9 @@
 * @author Robert Lefebure <robert@bungeebones.com>
 * @version 1.0
 * @package Bitcoin/Testcoin Monitor
+* Copy the process_btc_deposit.php file to your remote shared server and change the 
+* path in $file="http://your_website_address_here/process_btc_deposit.php"; in the first two functions
+* accordingly to point to that location
 */
 
 
