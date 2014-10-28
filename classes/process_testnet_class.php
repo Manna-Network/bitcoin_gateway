@@ -1,11 +1,14 @@
 <?php
 /**
-* Bitcoin and Testcoin daemon control for e-shop.
-* @author Robert Lefebure <robert@bungeebones.com>
+* Bitcoin and Testcoin Payment gateway to shared hosting account.
+* @author Robert Lefebure <robert.r.lefebure@gmail.com>
 * @version 1.0
 * @package Bitcoin/Testcoin Monitor
-* Copy the process_btc_deposit.php file to your remote shared server and change the 
-* path in $file="http://your_website_address_here/process_btc_deposit.php"; in the first two functions
+* Copy the process_btc_deposit.php file to your remote shared server then:
+* 
+* IMPORTANT: change the path in the lines 
+* $file="http://your_website_address_here/process_btc_deposit.php"; 
+* in the first two functions below
 * accordingly to point to that location
 */
 
