@@ -14,7 +14,7 @@ $user_id = $_POST['user_id'];// will be able to change this to POST when curl se
 
 //first we perform group maintenance on all the data in the system
 // we look at everything account/user in Bitcoin qt 
-$bc=new BitcoinAccount('http://bungeebones:B1u1n1g1e1e1b1o1n1e1s1@localhost:18332');
+$bc=new BitcoinAccount('http://rpcuser:password@localhost:18332');
 
 $usertrans = $bc->listTransactions($user_id); 
 $countusertrans= count($usertrans);
