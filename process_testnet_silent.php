@@ -18,7 +18,7 @@ $bc=new BitcoinAccount('http://rpcuser:password@localhost:18332');
 
 $usertrans = $bc->listTransactions($user_id); 
 $countusertrans= count($usertrans);
-print_r($usertrans);
+//print_r($usertrans);
 if($countusertrans > 0){
 	for($i=0;$i<=$countusertrans-1;$i++){
 		unset($address);
@@ -44,10 +44,10 @@ unset($gotflag);
 		$txid = $usertrans[$i]['txid'];
 				if($txid ==""){
 				//show the existing address
-				echo "<h1>Please make your Bitcoin deposit to this unique and custom Bitcoin address - made for you  ";
+			//	echo "<h1>Please make your Bitcoin deposit to this unique and custom Bitcoin address - made for you  ";
 				$users_unique_send_to_address = $bc->createAccountAndAddressbyUserID($user_id);
-				echo $users_unique_send_to_address;
-				echo "<br>Then Refresh This Page Or The User Control Panel Page (Watch The Balance) To Monitor Status</h1>";
+			//	echo $users_unique_send_to_address;
+			//	echo "<br>Then Refresh This Page Or The User Control Panel Page (Watch The Balance) To Monitor Status</h1>";
 				exit();
 				}
 				else{
@@ -102,9 +102,9 @@ $bbbridge->record_cold_transfer($user_id, $amount, $isTestCoin, $txid, $txid_new
 //talks to bungeebones.com via curl
 //need to actually spend the money from those address to cold storage now
 //And make one more record of the new transaction ID of it going into cold storage
-echo 'The new txid of it going to cold storage is :';
-echo $txid_new;
-echo "<h1>The transaction process is completed. If you wish to make another deposit refresh the page to get a new address (please do not reuse addresses nor make multiple deposits to the same address</h1>  ";
+//echo 'The new txid of it going to cold storage is :';
+//echo $txid_new;
+//echo "<h1>The transaction process is completed. If you wish to make another deposit refresh the page to get a new address (please do not reuse addresses nor make multiple deposits to the same address</h1>  ";
 				exit();
 						      }
 		//end the iteration through open trans
@@ -114,10 +114,10 @@ echo "<h1>The transaction process is completed. If you wish to make another depo
 				 }//close check if in arcihive
 				elseif($txid=="" AND $checkDepositsInArchive < 1)//this is duplicate code of next section but this runs if opentrans has old transactions while the other only runs for new users
 				{
-				echo "<h1>Please make your Bitcoin deposit to this unique and custom Bitcoin address - made for you  ";
-				$users_unique_send_to_address = $bc->createAccountAndAddressbyUserID($user_id);
-				echo $users_unique_send_to_address;
-				echo "<br>Then Refresh This Page Or The User Control Panel Page (Watch The Balance) To Monitor Status</h1>";
+			//	echo "<h1>Please make your Bitcoin deposit to this unique and custom Bitcoin address - made for you  ";
+			//	$users_unique_send_to_address = $bc->createAccountAndAddressbyUserID($user_id);
+			//	echo $users_unique_send_to_address;
+			//	echo "<br>Then Refresh This Page Or The User Control Panel Page (Watch The Balance) To Monitor Status</h1>";
 				}
 
                       }//close check if txid >0 
@@ -128,33 +128,33 @@ echo "<h1>The transaction process is completed. If you wish to make another depo
 $process_these_rows = $bbbridge->getWatchingUserTxnRows($user_id);
 //will return a multidim array of everything in watching . Multidim because it covers for if/when user sends more than one deposit
 if(!is_array($process_these_rows)){
-echo "<h1>Please make your Bitcoin deposit to this unique and custom Bitcoin address - made for you  ";
-$users_unique_send_to_address = $bc->createAccountAndAddressbyUserID($user_id);
-echo $users_unique_send_to_address;
-echo "<br>Then Refresh This Page Or The User Control Panel Page (Watch The Balance) To Monitor Status</h1>
+//echo "<h1>Please make your Bitcoin deposit to this unique and custom Bitcoin address - made for you  ";
+//$users_unique_send_to_address = $bc->createAccountAndAddressbyUserID($user_id);
+//echo $users_unique_send_to_address;
+//echo "<br>Then Refresh This Page Or The User Control Panel Page (Watch The Balance) To Monitor Status</h1>
 
-<table ><tr><td>
-<h2>Copy the address and go to any of the following Testnet faucets (or any other one you choose) and paste the address there. After one confirmation from the network the funds will appear as available to spend for better placement of your link. </h2>
-<p><a target='_blank' href='http://tpfaucet.appspot.com'>TPs Testnet Faucet</a>
-<p><a target='_blank' href='http://faucet.xeno-genesis.com/'>Mojocoin\'s Testnet3 Faucet</a>
-<p><a target='_blank' href='https://en.bitcoin.it/wiki/Bitcoin_faucet'> A list of more of them</a>
+//<table ><tr><td>
+//<h2>Copy the address and go to any of the following Testnet faucets (or any other one you choose) and paste the address there. After one confirmation from the network the funds will appear as available to spend for better placement of your link. </h2>
+//<p><a target='_blank' href='http://tpfaucet.appspot.com'>TPs Testnet Faucet</a>
+//<p><a target='_blank' href='http://faucet.xeno-genesis.com/'>Mojocoin\'s Testnet3 Faucet</a>
+//<p><a target='_blank' href='https://en.bitcoin.it/wiki/Bitcoin_faucet'> A list of more of them</a>
 
-";
+//";
 exit();
 }
 else
 {
-echo '<h1> Need to process these rows, gotten from watching,  now that watching is up to date.<br>Might want to reorder the array by date in reverse?</h1>';
+//echo '<h1> Need to process these rows, gotten from watching,  now that watching is up to date.<br>Might want to reorder the array by date in reverse?</h1>';
 //print_r($process_these_rows);
 
 	
 								
 									if($confirmations >0 AND $confirmations <3){
-									echo '<h1>Your account has been credited but is still being processed. Please do not make any additional deposits while the transaction is being processed. Thank you for your patience. You can now return to your user control panel and use the credits to purchase better placement.';
+								//	echo '<h1>Your account has been credited but is still being processed. Please do not make any additional deposits while the transaction is being processed. Thank you for your patience. You can now return to your user control panel and use the credits to purchase better placement.';
 
 									}
 									if($confirmations >2){
-							echo '<h1>The next time you refresh this page you will be presented with a completely new address to deposit to. Please do not reuse the old one.';
+						//	echo '<h1>The next time you refresh this page you will be presented with a completely new address to deposit to. Please do not reuse the old one.';
 									}
 
 								}//they don't need an address displayed
