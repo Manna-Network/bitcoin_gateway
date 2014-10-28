@@ -22,5 +22,9 @@ THEN OPEN (IN A BROWSER) www.yourVPS.com/testbitcoin.php. Assuming the server is
 Once the RPC connection is established with the bitcoin server then make the same configuration change towards the 
 beginning of the process_testnet.php page.
 
+Install the database and tables (if you haven't already).
+
+
+
 
 
