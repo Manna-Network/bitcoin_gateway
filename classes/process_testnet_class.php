@@ -7,7 +7,7 @@
 * Copy the process_btc_deposit.php file to your remote shared server then:
 * 
 * IMPORTANT: change the path in the lines 
-* $file="http://your_website_address_here/process_btc_deposit.php"; 
+* $file="http://your_website_address_here/your_process_btc_deposit_page.php";  
 * in the first two functions below
 * accordingly to point to that location
 */
@@ -17,7 +17,7 @@ class process_testnet
 {
 function credit_BB_account($user_id, $current_amount, $isTestCoin, $txn ){
 
-$file="http://your_website_address_here/process_btc_deposit.php";
+$file="http://your_website_address_here/your_process_btc_deposit_page.php";  
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $file);
  		curl_setopt($ch, CURLOPT_POSTFIELDS, array('user_id' => $user_id,'deposit_amount' => $current_amount,'isTestCoin' => $isTestCoin , 'txn' => $txn));
@@ -32,7 +32,7 @@ $file="http://your_website_address_here/process_btc_deposit.php";
 
 function record_cold_transfer($user_id, $current_amount, $isTestCoin, $txn_old, $txn_new, $address_old, $address_new_cold ){
 
-$file="http://your_website_address_here.com/process_deposit_to_cold_testnet.php";
+$file="http://your_website_address_here/your_process_btc_deposit_page.php"; 
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $file);
  		curl_setopt($ch, CURLOPT_POSTFIELDS, array('user_id' => $user_id,'amount' => $current_amount,'isTestCoin' => $isTestCoin , 'txid_old' => $txn_old, 'txid_new' => $txn_new, 'address_old' => $address_old, 'address_new_cold' => $address_new_cold));
@@ -59,7 +59,7 @@ $timereceived){
 include($_SERVER['DOCUMENT_ROOT']."/db_cfg/db2bbconfiga.php");
 include($_SERVER['DOCUMENT_ROOT']."/db_cfg/connectloginmysqli.php");
 
-$query = "INSERT INTO `move_out_to_cold` (
+$query = "INSERT INTO `moved_to_cold` (
 `account`  ,
 `address` ,
 `amount` ,
@@ -94,7 +94,7 @@ public function moveToArchive ($txid){
 include($_SERVER['DOCUMENT_ROOT']."/db_cfg/db2bbconfiga.php");
 include($_SERVER['DOCUMENT_ROOT']."/db_cfg/connectloginmysqli.php");
 //copy to deposits_in_archive
-$query = "INSERT into `deposits_in_archive` Select  * from `watch_incoming` where `txid`='$txid' ";
+$query = "INSERT into `archived_deposits` Select  * from `watch_incoming` where `txid`='$txid' ";
 $result = mysqli_query($connect, $query);
 //copy to out_to_coldstorage_archive
 $query = "DELETE FROM `watch_incoming` WHERE `txid`='$txid'";
@@ -152,8 +152,8 @@ return  $flag;
 public function checkDepositsInArchive($txid){
 include($_SERVER['DOCUMENT_ROOT']."/db_cfg/db2bbconfiga.php");
 include($_SERVER['DOCUMENT_ROOT']."/db_cfg/connectloginmysqli.php");
-$query = "Select  * from `deposits_in_archive` where `txid`='$txid' ";
-//echo $query;
+$query = "Select  * from `archived_deposits` where `txid`='$txid' ";
+echo $query;
 $result = mysqli_query($connect, $query);
  $row_cnt = mysqli_num_rows($result);
 return  $row_cnt;
@@ -162,7 +162,7 @@ return  $row_cnt;
 public function checkMoveOutToCold($txid){
 include($_SERVER['DOCUMENT_ROOT']."/db_cfg/db2bbconfiga.php");
 include($_SERVER['DOCUMENT_ROOT']."/db_cfg/connectloginmysqli.php");
-$query = "Select  * from `move_out_to_cold` where `txid`='$txid' ";
+$query = "Select  * from `moved_to_cold` where `txid`='$txid' ";
 //echo $query;
 $result = mysqli_query($connect, $query);
  $row_cnt = mysqli_num_rows($result);
@@ -178,7 +178,7 @@ include($_SERVER['DOCUMENT_ROOT']."/db_cfg/connectloginmysqli.php");
 if(empty($id)) $id = "";
 if(empty($address)) $address = "";
 if(empty($receive)) $receive = "";
-$query = "Select  * from `deposits_in_archive` where `account`='$user_id'";
+$query = "Select  * from `archived_deposits` where `account`='$user_id'";
 $result = mysqli_query($connect, $query);
 if (mysqli_num_rows($result)>0) { 
  while ($row = mysqli_fetch_array($result))
@@ -324,8 +324,9 @@ include($_SERVER['DOCUMENT_ROOT']."/db_cfg/db2bbconfiga.php");
 include($_SERVER['DOCUMENT_ROOT']."/db_cfg/connectloginmysqli.php");
 date_default_timezone_set('America/New_York');
 $now = date('Y-m-d H:m:s');
-$query = "INSERT into  `watch_incoming` (`account`, `address`, `category`,`amount`, `confirmations`, `txid`, `walletconflicts`, `time`, `timereceived`, `flag`)values ('$account', '$address', '$category','$amount', '$confirmations', '$txid', '$walletconflicts', '$time', '$timereceived', '0')";
-//echo '<br>in func line 90 ... ', $query;
+$query = "INSERT into  `watch_incoming` (`account`, `address`, `category`,`amount`, `confirmations`, `txid`, `walletconflicts`, `time`, `timereceived`, `flag`)values ('$account', '$address', '$category','$amount', '$confirmations', '$txid', '', '$time', '$timereceived', '0')";
+//echo '<br>in func line 328 ... ', $query;
+//changelog inserted null value (rather than eliminated "wallet conflicts field like below) because is an array and causes error
 //`account`, `address`, `category`,`amount`, `confirmations`, `txid`, `walletconflicts`, `time`, `timereceived`
 
 $result = mysqli_query($connect, $query) or die("Couldn't execute '47' query");
@@ -350,8 +351,9 @@ include($_SERVER['DOCUMENT_ROOT']."/db_cfg/db2bbconfiga.php");
 include($_SERVER['DOCUMENT_ROOT']."/db_cfg/connectloginmysqli.php");
 date_default_timezone_set('America/New_York');
 $now = date('Y-m-d H:m:s');
-$query = "UPDATE  `watch_incoming` set `address`='$address', `category`='$category',`amount`='$amount', `confirmations`='$confirmations', `txid`='$txid', `walletconflicts`='$walletconflicts', `time`='$time', `timereceived`='$timereceived' WHERE `account` ='$account' AND `txid`='$txid'";
-//echo $query;
+$query = "UPDATE  `watch_incoming` set `address`='$address', `category`='$category',`amount`='$amount', `confirmations`='$confirmations', `txid`='$txid', `time`='$time', `timereceived`='$timereceived' WHERE `account` ='$account' AND `txid`='$txid'";
+//echo '<br>line 354 process testente class ', $query;
+//changelog eliminated "wallet conflicts field because is an array and causes error
 //`account`, `address`, `category`,`amount`, `confirmations`, `txid`, `walletconflicts`, `time`, `timereceived`
 
 $result = mysqli_query($connect, $query) or die("Couldn't execute '47' query");
