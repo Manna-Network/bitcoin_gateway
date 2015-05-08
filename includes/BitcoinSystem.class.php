@@ -73,7 +73,12 @@ class BitcoinSystem
  * @param string $addr Address to validate
  * @return array
  */
- public function validateAddress($addr)
+ /*
+ following function WAS named the same as above function (in original download) and threw redeclare error
+ renamed and, so, is not called anywhere (sic with new name). Didn't research if any "validatAccount" type of function is even called in script
+ Probably can deprecate
+ */
+ public function validateAccount($addr)
  {
   return $this->rpc->getaccount($addr);
  }
