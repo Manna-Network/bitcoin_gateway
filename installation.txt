@@ -34,14 +34,19 @@ You can change that code at the same time as you do the test pages or wait until
 
 THEN OPEN (IN A BROWSER) www.yourVPS.com/testbitcoin.php. Assuming the server is running it should display Bitcoin info.
 
-Once the RPC connection is established with the bitcoin server then make the same configuration change towards the 
-beginning of the classes/process_testnet_class.php page.
+Once the RPC connection is established with the bitcoin server then you need to make some configuration changes on
+the classes/process_testnet_class.php page.
+There will be two lines of code there like this: $file="http://your_website_address_here/your_process_btc_deposit_page.php";
+That URL will be where the results of all Blockchain monitoring that the script is doing of the user's account will be displayed 
+on your website AND where you can further process any blockchain transactions yourself (enter data in a database, credit the user's 
+account etc).
+There is a sample of that page in the REMOTE_SHARED_HOST_INDEX_FILE of the download. Copy and install that file (index_os.php) in a location
+on your shared hosting server (for example). When a user (authenticated hopefully) accesses that page on your site they will 
+receive a unique address to make a deposit to.
 
-Install the database and tables (if you haven't already).
+Install the database and tables (on the VPS) if you haven't already.
 
-Install the index_os.php file (copy it from inside the REMOTE_SHARED_HOST_INDEX_FILE folder of the download) into your 
-remote shared server website files. In that file there is one configuration that will send curl requests to the VPS and 
-you need to insert the address there.
+
 
 The script is currently fooled into believing you are an authenticated user of the shared server by a HARDCODING of 
 a user id (user ID 1001). The user id will be used to create a unique account for that user (and from that unique account
