@@ -1,63 +1,55 @@
-Assuming you have the bitcoin server running on your VPS and assuming you have Apache, MySql, Php and Curl also installed 
-there then the first step is to configure this script to connect to your database using the db2bbconfiga.php file in the 
-db_cfg folder.
+These instructions assume you already have the bitcoin server running on your VPS and also assume you have Apache, MySql, Php and Curl installed 
 
-You will eventually need to create a db named testnet and use the 3 included sql files to install the three tables (watching, 
-archived, and move_to_cold tables). 
+1. Configure this script to connect to your database using the db2bbconfiga.php file in the db_cfg folder.
 
-You also need to configure and test your RPC JSon connection to the Bitcoin server. 
+   A) Create a db named testnet and use the 3 included sql files to install the three tables (watching, archived, and move_to_cold tables). 
 
-First, make sure you configured RPC user and password in the bitcoin.conf file of the bitcoin server (.bitcoin/bitcoin.conf)
-like this
-server=1
-daemon=1
-testnet=1
+2. Configure and test your RPC JSon connection to the Bitcoin server. 
 
-rpcuser=CreateYourUserName
-rpcpassword=CreateYourPassword$$$###***
+   A) Make sure you configured RPC user and password in the bitcoin.conf file of the bitcoin server (.bitcoin/bitcoin.conf)
+      some thing like this
+      rpcuser=CreateYourUserName
+      rpcpassword=CreateYourPassword$$$###***
 
-In test_bitcoin_rpc there is one location with a line of code:
-$RPC=new jsonRPCClient('http://rpcuser:password@localhost:18332');
+   B) In test_bitcoin_rpc there is one location with a line of code:
+      $RPC=new jsonRPCClient('http://rpcuser:password@localhost:18332');
+      In testbitcoin.php there are three locations where similar code (like the following) appears:
+      $sys=new BitcoinSystem('http://rpcuser:password@localhost:18332');
 
-In testbitcoin.php there are three locations where similar code (like the following) appears:
-$sys=new BitcoinSystem('http://rpcuser:password@localhost:18332');
+      Change the "rpcuser" part of the lines to reflect the rpc username you have entered in the Bitcoin server's 
+      .bitcoin/bitcoin.conf file
 
-Change the "rpcuser" part of the lines to reflect the rpc username you have entered in the Bitcoin server's 
-.bitcoin/bitcoin.conf file
+      Similarly, change the password in those lines to match as well.
 
-Similarly, change the password in those lines to match as well.
+    C) Important: There is one more similar line of code that needs to be changed in the process_testnet.php page which IS 
+       THE ACTUAL production code (i.e. as opposed to the two test files prevously described) 
+       and looks like this :$bc=new BitcoinAccount('http://rpcuser:password@localhost:18332'); 
+       You can change that code at the same time as you do the test pages or wait until you finish with the test pages.
 
-(Important: There is one more similar line of code that needs to be changed in the process_testnet.php page which IS 
-THE ACTUAL production code (i.e. as opposed to the two test files prevously described) 
-and looks like this :$bc=new BitcoinAccount('http://rpcuser:password@localhost:18332'); 
-You can change that code at the same time as you do the test pages or wait until you finish with the test pages.
+    D) THEN OPEN (IN A BROWSER) www.yourVPS.com/testbitcoin.php. Assuming the server is running it should display Bitcoin info.
 
-THEN OPEN (IN A BROWSER) www.yourVPS.com/testbitcoin.php. Assuming the server is running it should display Bitcoin info.
+3. Once the RPC connection is established with the bitcoin server then you need to make some configuration changes on
+   the classes/process_testnet_class.php page in the VPS. There will be two lines of code there like this: 
+   $file="http://your_website_address_here/index_os.php";
 
-Once the RPC connection is established with the bitcoin server then you need to make some configuration changes on
-the classes/process_testnet_class.php page.
-There will be two lines of code there like this: $file="http://your_website_address_here/your_process_btc_deposit_page.php";
-That URL will be where the results of all Blockchain monitoring that the script is doing of the user's account will be displayed 
-on your website AND where you can further process any blockchain transactions yourself (enter data in a database, credit the user's 
-account etc).
-There is a sample of that page in the REMOTE_SHARED_HOST_INDEX_FILE of the download. Copy and install that file (index_os.php) in a location
-on your shared hosting server (for example). When a user (authenticated hopefully) accesses that page on your site they will 
-receive a unique address to make a deposit to.
+   That URL will be where the results of all Blockchain monitoring will be displayed on your website AND where you can further 
+   process any blockchain transactions yourself (enter data in a database, credit the user's account etc).
 
-Install the database and tables (on the VPS) if you haven't already.
+   There is a sample of that page in the REMOTE_SHARED_HOST_INDEX_FILE of the download. Copy and install that file (index_os.php) 
+   in a location on your public facing shared hosting server (for example). Make the configuration change to the line that 
+   communicates  with your VPS ( $file="http://your_VPS_address_here/process_testnet.php") 
+
+   When a user accesses that page on your site they will receive a unique address to make a deposit to (assuming everything is working).
+
+4) Install the database and tables (on the VPS) if you haven't already.
 
 
 
 The script is currently fooled into believing you are an authenticated user of the shared server by a HARDCODING of 
-a user id (user ID 1001). The user id will be used to create a unique account for that user (and from that unique account
-the script will create unlimited new addresses for the user to submit Bitcoin payments to). You can make the script
-create a new account for each of your authenticated users by making that CODING CHANGE to the 
-index_os.php file and send a unique account number for each user. Each user, then, will get a unique address and (if they follow recomendations) will receive a unique address for each deposit they make. NOTE: They will receive a new address AFTER the script moves their deposit to another address or cold storage. Since that setting is configurable and currently set at 3 confirmations then the user can receive a new address after that and at approximately every 30 minutes (at ten minutes per confirmation)
+a user id (user ID 1001) on the index_os.php page. You can use any user id numbers you wish as the user id will be used to create a unique account for that user (and from that unique account the script will create unlimited new addresses for that user to submit Bitcoin payments to). You can make the script create a new account for each of your authenticated users by making a CODING CHANGE to that hardcoded line and send a unique account number for each user. Each user, then, will get a unique address and (if they follow recomendations) 
+will receive a unique address for each deposit they make. NOTE: They will receive a new address AFTER the script moves 
+their deposit to another address or cold storage. Since that setting is configurable and currently set at 3 
+confirmations then the user can receive a new address after that and at approximately every 30 minutes 
+(at ten minutes per confirmation)
 
-Visit that page on your shared server from a browser. If everything is configured correctly then the page should display and address.
-
-
-
-
-
-
+Visit that page on your shared server from a browser. If everything is configured correctly then the page should display a valid testnet/testcoin address.
