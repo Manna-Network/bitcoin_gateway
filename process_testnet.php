@@ -33,15 +33,21 @@ unset($UserHistorybytxid);
 unset($UserHistorybyuser);
 unset($checkDepositsInArchive);
 unset($gotflag);
+if($usertrans[$i]['category'] !=  "send"){//the transfers into cold storage show up in the system but we want them to be processed silently in $
+                $address = $usertrans[$i]['address'];
+                $amount = $usertrans[$i]['amount'];
+                $category = $usertrans[$i]['category'];
+                $confirmations = $usertrans[$i]['confirmations'];
+                $walletconflicts = $usertrans[$i]['walletconflicts'];
+                $time = $usertrans[$i]['time'];
+                $timereceived = $usertrans[$i]['timereceived'];
+                $txid = $usertrans[$i]['txid'];
+}
+else
+{
+$txid = "";//need to set txid if we skip out because category is send - setting txid to null prevents error
+}
 
-		$address = $usertrans[$i]['address'];
-		$amount = $usertrans[$i]['amount'];
-		$category = $usertrans[$i]['category'];
-		$confirmations = $usertrans[$i]['confirmations'];
-		$walletconflicts = $usertrans[$i]['walletconflicts'];
-		$time = $usertrans[$i]['time'];
-		$timereceived = $usertrans[$i]['timereceived'];
-		$txid = $usertrans[$i]['txid'];
 				if($txid ==""){
 				//show the existing address
 				echo "<h1>Please make your Bitcoin deposit to this unique and custom Bitcoin address - made for you  ";
