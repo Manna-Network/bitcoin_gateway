@@ -7,7 +7,7 @@
 * Copy the process_btc_deposit.php file to your remote shared server then:
 * 
 * IMPORTANT: change the path in the lines 
-* $file="http://your_website_address_here/your_process_btc_deposit_page.php";  
+* $file="http://your_website_address_here/index_os.php";  
 * in the first two functions below
 * accordingly to point to that location
 */
@@ -17,7 +17,7 @@ class process_testnet
 {
 function credit_BB_account($user_id, $current_amount, $isTestCoin, $txn ){
 
-$file="http://your_website_address_here/your_process_btc_deposit_page.php";  
+$file="http://your_website_address_here/index_os.php";  
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $file);
  		curl_setopt($ch, CURLOPT_POSTFIELDS, array('user_id' => $user_id,'deposit_amount' => $current_amount,'isTestCoin' => $isTestCoin , 'txn' => $txn));
@@ -32,7 +32,7 @@ $file="http://your_website_address_here/your_process_btc_deposit_page.php";
 
 function record_cold_transfer($user_id, $current_amount, $isTestCoin, $txn_old, $txn_new, $address_old, $address_new_cold ){
 
-$file="http://your_website_address_here/your_process_btc_deposit_page.php"; 
+$file="http://your_website_address_here/index_os.php"; 
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $file);
  		curl_setopt($ch, CURLOPT_POSTFIELDS, array('user_id' => $user_id,'amount' => $current_amount,'isTestCoin' => $isTestCoin , 'txid_old' => $txn_old, 'txid_new' => $txn_new, 'address_old' => $address_old, 'address_new_cold' => $address_new_cold));
