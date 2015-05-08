@@ -5,17 +5,32 @@ db_cfg folder.
 You will eventually need to create a db named testnet and use the 3 included sql files to install the three tables (watching, 
 archived, and move_to_cold tables). 
 
-You also need to configure and test your RPC JSon connection to the Bitcoin server. The easiest way to do that (test 
-your RPC JSon) is to make the changes to the RPC user name and password in the test_bitcoin.php and the test_bitcoin_rpc.php 
-files. 
+You also need to configure and test your RPC JSon connection to the Bitcoin server. 
 
-First, make sure you configured RPC user and password in the bitcoin.conf file of the bitcoin server like this
+First, make sure you configured RPC user and password in the bitcoin.conf file of the bitcoin server (.bitcoin/bitcoin.conf)
+like this
 server=1
 daemon=1
 testnet=1
 
 rpcuser=CreateYourUserName
 rpcpassword=CreateYourPassword$$$###***
+
+In test_bitcoin_rpc there is one location with a line of code:
+$RPC=new jsonRPCClient('http://rpcuser:password@localhost:18332');
+
+In testbitcoin.php there are three locations where similar code (like the following) appears:
+$sys=new BitcoinSystem('http://rpcuser:password@localhost:18332');
+
+Change the "rpcuser" part of the lines to reflect the rpc username you have entered in the Bitcoin server's 
+.bitcoin/bitcoin.conf file
+
+Similarly, change the password in those lines to match as well.
+
+(Important: There is one more similar line of code that needs to be changed in the process_testnet.php page which IS 
+THE ACTUAL production code (i.e. as opposed to the two test files prevously described) 
+and looks like this :$bc=new BitcoinAccount('http://rpcuser:password@localhost:18332'); 
+You can change that code at the same time as you do the test pages or wait until you finish with the test pages.
 
 THEN OPEN (IN A BROWSER) www.yourVPS.com/testbitcoin.php. Assuming the server is running it should display Bitcoin info.
 
