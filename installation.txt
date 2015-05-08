@@ -2,11 +2,11 @@ Assuming you have the bitcoin server running on your VPS and assuming you have A
 there then the first step is to configure this script to connect to your database using the db2bbconfiga.php file in the 
 db_cfg folder.
 
-You will eventually need to create a db named testnet and use the included sql file to install the three tables (watching, 
-archived, and move_to_cold tables). That can be done now or after configuring and testing your RPC JSon connection to the
-Bitcoin server.
+You will eventually need to create a db named testnet and use the 3 included sql files to install the three tables (watching, 
+archived, and move_to_cold tables). 
 
-The easiest way to do that (test your RPC JSon) is to make the changes to the RPC user name and password in the test_bitcoin.php and the test_bitcoin_rpc.php 
+You also need to configure and test your RPC JSon connection to the Bitcoin server. The easiest way to do that (test 
+your RPC JSon) is to make the changes to the RPC user name and password in the test_bitcoin.php and the test_bitcoin_rpc.php 
 files. 
 
 First, make sure you configured RPC user and password in the bitcoin.conf file of the bitcoin server like this
