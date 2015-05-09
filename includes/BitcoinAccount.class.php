@@ -185,14 +185,22 @@ return $this->rpc->getreceivedbyaddress ($value,1);
  * @param string $comment Transfer comment
  * @return boolean
  */
- public function transfer($target_addr,$amount)
+ public function transfer($user_id,$target_addr,$amount,$unknown, $comment, $comment_to)
  {
+$unknown=3;//
+//transfer($user_id, $sendto_address,$amount, "3", $comment, $comment_to);
+
+echo '<br> i n BicoinAccount class transfer func sending this address to sendfrom func after validating';
   $valid=$this->rpc->validateaddress($target_addr);
+echo '<br>target address being validates ', $target_addr;
   if($valid['isvalid'])
   {
-   return $this->rpc->sendfrom($this->account,$target_addr,$amount);
+echo '<br> i n BicoinAccount class is valid so  sending this address to sendfrom func after validating';
+
+   return $this->rpc->sendfrom($user_id,$target_addr,$amount);
   }
  }
+
 
  /**
  * Transfer specified amount to another user in same system
